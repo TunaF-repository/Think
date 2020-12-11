@@ -10,7 +10,7 @@
     <title>Think</title>
 </head>
 <body>
-	check
+	checkcheck
     <div>
         <header>
             <div><!--Think!-->
