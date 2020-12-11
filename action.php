@@ -78,12 +78,26 @@
             $_SESSION['id'] = $row['id'];
             $_SESSION['password'] = $row['password'];
 
-            echo "<script>location.href='/Think';</script>";
+            echo "<script>location.href='./';</script>";
         }else{
             echo "<script>alert('아이디 혹은 패스워드가 틀렸습니다.');location.href='./login.php'</script>";
             exit();
         }
     }else if($mode == "write"){
-        echo $_POST['title'];
+
+        $sql = "INSERT INTO think_board
+            (title,description,autor,created,scret_password)
+            VALUE
+            ('{$_POST['title']}','{$_POST['description']}','{$_SESSION['name']}',NOW(),0); 
+        ";
+
+        $result = mysqli_query($conn,$sql);
+        if($result == false){
+            echo mysqli_error($conn);
+            exit();
+        }else{
+            echo "<script>alert('정상적으로 작성이 완료되었습니다.');location.href='./board.php';</script>";
+        }
+       
     }
 ?>

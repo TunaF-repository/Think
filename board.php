@@ -1,6 +1,7 @@
 <?
     session_save_path("./cookie_value/");
     session_start();
+    header("Content-Type: text/html; charset=UTF-8;");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +17,7 @@
         </div>
         <div> <!--상단 메뉴 페이지-->
             <ul>
-                <li><a href="/think">HOME</a></li>
+                <li><a href="./">HOME</a></li>
                 <li><a href=""><?php
                     if(!empty($_SESSION['id'])){
                         echo "<a href=\"./logout.php\">로그아웃</a>";
@@ -31,41 +32,40 @@
     <article><!--게시글-->
         <div>
             <div>
-                <form action="./board_write.php" method="GET">
-                    <button name="mode" value="write">Write</button>
-                </form>
+                <a href="./board_write.php">Write</a>
             </div>
+            
             <div>
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>NO</th>
+                <?php
+                    $conn = mysqli_connect('localhost', 'root', 'tmdgns12', 'think');
+                    $sql = "SELECT id,title,description,autor,created,scret_password FROM think_board;";
+
+                    $result = mysqli_query($conn, $sql);?>
+                    <table>
+                        <thead>
+                            <th>No</th>
                             <th>Title</th>
-                            <th>Writer</th>
+                            <th>author</th>
                             <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>aaaaa</td>
-                            <td>aaaaa</td>
-                            <td>aaaaa</td>
-                            <td>aaaaa</td>
-                        </tr>
-                        <tr>
-                            <td>aaaaa</td>
-                            <td>aaaaa</td>
-                            <td>aaaaa</td>
-                            <td>aaaaa</td>
-                        </tr>
-                        <tr>
-                            <td>aaaaa</td>
-                            <td>aaaaa</td>
-                            <td>aaaaa</td>
-                            <td>aaaaa</td>
-                        </tr>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tobody>
+                                <?php
+                                    while($row = mysqli_fetch_assoc($result)){
+                                        echo "<tr>";
+                                        echo "<th>".$row['id']."</th>";
+                                        echo "<th><a href='./board_read.php?idx={$row['id']}'>".$row['title']."</a></th>";
+                                        echo "<th>".$row['autor']."</th>";
+                                        echo "<th>".$row['created']."</th>";
+                                        echo "</tr>";
+                                    }
+                                ?>
+                        </tobody>
+                    </table>
+                <?php
+                    while($row = mysqli_fetch_assoc($result)){
+                        var_dump($row);
+                    }
+                ?>
             </div>
             
             <div>

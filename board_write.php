@@ -1,9 +1,10 @@
 <?
     session_save_path("./cookie_value/");
     session_start();
+    header("Content-Type: text/html; charset=UTF-8;");
 ?>
 <?php
-    if(!empty($_SESSION['id'])){
+    if(empty($_SESSION['id'])){
         echo "<script>alert('로그인이 되어 있지 않습니다.');location.href='./login.php';</script>";
         exit();
     }

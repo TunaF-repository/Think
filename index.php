@@ -10,7 +10,6 @@
     <title>Think</title>
 </head>
 <body>
-	checkcheckcheck
     <div>
         <header>
             <div><!--Think!-->
@@ -18,7 +17,7 @@
             </div>
             <div> <!--상단 메뉴 페이지-->
                 <ul>
-                    <li><a href="/think">HOME</a></li>
+                    <li><a href="./">HOME</a></li>
                     <li><a href=""><?php
                         if(!empty($_SESSION['id'])){
                             echo "<a href=\"./logout.php\">로그아웃</a>";
