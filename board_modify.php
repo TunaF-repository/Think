@@ -46,16 +46,15 @@
         ?>
         <div>
             <span>author:<?=$row['autor'];?></span><span>Date:<?=$row['created'];?></span><hr>
-            <div><span>Title:</span><?=$row['title'];?></div><hr>
-            <div><span>contents:</span><?=$row['description'];?></div><hr>
-            <div><span>File:</span></div><hr>
-            <?php
-                if($row['autor'] == $_SESSION['id']){
-                    echo "<button onclick=\"location.href='./board_modify.php?idx={$_GET['idx']}'\">수정</button>";
-                    echo "<button onclick=\"location.href='./action.php?mode=delete&idx={$_GET['idx']}'\">삭제</button>";
-                }
-            ?>
-            <button onclick="location.href='./board.php'">목록</button>
+            <form action="action.php" method="POST">
+                <input type="hidden" name="mode" value="modify">
+                <input type="hidden" name="id" value="<?=$_GET['idx']?>">
+                <div><span>Title:</span><input type="text" name="title" value="<?=$row['title']?>"></div><hr>
+                <div><span>contents:</span><textarea name="description"><?=$row['description']?></textarea></div><hr>
+                <div><span>File:</span></div><hr>
+                <input type="submit" value="수정하기">
+            </form>
+            <button onclick="location.href='./board.php'">뒤로</button>
         </div>
     </article>
     <footer><!--비즈니스문의-->

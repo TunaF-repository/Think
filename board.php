@@ -48,7 +48,7 @@
                             <th>author</th>
                             <th>Date</th>
                         </thead>
-                        <tobody>
+                        <tody>
                                 <?php
                                     while($row = mysqli_fetch_assoc($result)){
                                         echo "<tr>";
@@ -59,7 +59,7 @@
                                         echo "</tr>";
                                     }
                                 ?>
-                        </tobody>
+                        </tody>
                     </table>
                 <?php
                     while($row = mysqli_fetch_assoc($result)){

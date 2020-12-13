@@ -2,6 +2,11 @@
     session_save_path("./cookie_value/");
     session_start();
 ?>
+<?
+    $conn = mysqli_connect("localhost","root","tmdgns12","think");
+    $sql = "SELECT id,title,autor,created FROM think_board;";
+    $result = mysqli_query($conn,$sql);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,16 +44,21 @@
         
         <section> <!--게시글 목록-->
             <div>
-                <div><a href="#">공지사항</a></div>
                 <div>
                     <div>
-                        <a href="./board.php">게시글 목록</a>
+                        <fieldset>
+                            <legend><a href="./board.php">게시글 목록</a></legend>
+                        
+                            <ul>
+                                <?php
+                                    $result = mysqli_query($conn,$sql);
+                                    while($row = mysqli_fetch_assoc($result)){
+                                        echo "<li><a href='./board_read.php?idx={$row['id']}'>{$row['title']}</a></li>";
+                                    }
+                                ?>
+                            </ul>
+                        </fieldset>
                     </div>
-                    <ul>
-                        <li><a href="#">title</a></li>
-                        <li><a href="#">title</a></li>
-                        <li><a href="#">title</a></li>
-                    </ul>
                 </div>
             </div>
         </section>
@@ -57,13 +67,14 @@
             <div>
                 <fieldset>
                     <legend>공지사항</legend>
-                    <div>
                         <ul>
-                            <li></li>
-                            <li></li>
-                            <li></li>
+                            <?php
+                                $result = mysqli_query($conn,$sql);
+                                while($row = mysqli_fetch_assoc($result)){
+                                    echo "<li><a href='./board_read.php?idx={$row['id']}'>{$row['title']}</a></li>";
+                                }
+                            ?>
                         </ul>
-                    </div>
                 </fieldset>
             </div>
             <div>
@@ -71,9 +82,7 @@
                     <legend>활동사진</legend>
                     <div>
                         <ul>
-                            <li></li>
-                            <li></li>
-                            <li></li>
+                            <h1>준비중</h1>
                         </ul>
                     </div>
                 </fieldset>

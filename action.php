@@ -97,7 +97,21 @@
             exit();
         }else{
             echo "<script>alert('정상적으로 작성이 완료되었습니다.');location.href='./board.php';</script>";
+            exit();
         }
        
+    }else if($mode == "modify"){
+
+        $sql = "UPDATE think_board SET title='{$_POST['title']}', description='{$_POST['description']}', created=NOW() WHERE id={$_POST['id']}";
+        $result = mysqli_query($conn, $sql);
+
+        if($result == false){
+            echo mysqli_error($conn);
+            exit();
+        }else{
+            echo "<script>alert('정상적으로 수정이 완료되었습니다.');location.href='./board.php';</script>";
+            exit();
+        }
+        
     }
 ?>
