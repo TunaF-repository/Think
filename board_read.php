@@ -48,7 +48,10 @@
             <span>author:<?=$row['autor'];?></span><span>Date:<?=$row['created'];?></span><hr>
             <div><span>Title:</span><?=$row['title'];?></div><hr>
             <div><span>contents:</span><?=$row['description'];?></div><hr>
-            <div><span>File:</span></div><hr>
+            <? if(!empty($row["file_real"])){ $file_name=iconv("EUC-KR","UTF-8",$row["file_real"]);?>
+                <div><span>File:</span><span><a href="download.php?file=<?=$row["file_real"];?>"><?=$file_name;?></a></span></div><hr>
+            <?}?>
+            
             <?php
                 if($row['autor'] == $_SESSION['id']){
                     echo "<button onclick=\"location.href='./board_modify.php?idx={$_GET['idx']}'\">수정</button>";

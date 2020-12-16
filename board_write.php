@@ -28,11 +28,12 @@
         <div>
             <h1>Write Page</h1><hr>
         </div>
-        <form action="action.php" method="POST">
+        <form action="action.php" enctype="multipart/form-data" method="POST">
             <input type="hidden" name="mode" value="write">
             <div>Title</div><input type="text" name="title" placeholder="Title Input" required><br>
             <div>Contents</div><textarea name="description" placeholder="Description Input" required></textarea><br>
-            <div>File</div><input type="file" name="userfile"><hr>
+            <div>File</div>
+            <input type="file" name="userfile">
             <input type="checkbox" name="secret" value=1>Secret writing<br>
             <input type="submit" value="Write">
         </form>

@@ -84,11 +84,23 @@
             exit();
         }
     }else if($mode == "write"){
+        if(!empty($_FILES["userfile"]["name"])){
+            $upload_path = "./upload";
+            $uploadFile = iconv("UTF-8","EUC-KR",$_FILES["userfile"]["name"]);
+            $uploadPath = "{$upload_path}/{$uploadFile}";
 
+            if(move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadPath)){
+                echo "파일이 성공적으로 업로드 되었습니다. \n";
+            }else{
+                echo "파일 업로드를 실패했습니다.";
+                exit();
+            }
+        }
+        
         $sql = "INSERT INTO think_board
-            (title,description,autor,created,scret_password)
+            (title,description,autor,created,scret_password,file_real)
             VALUE
-            ('{$_POST['title']}','{$_POST['description']}','{$_SESSION['name']}',NOW(),0); 
+            ('{$_POST['title']}','{$_POST['description']}','{$_SESSION['name']}',NOW(),0,'{$uploadFile}'); 
         ";
 
         $result = mysqli_query($conn,$sql);
@@ -101,8 +113,19 @@
         }
        
     }else if($mode == "modify"){
-
-        $sql = "UPDATE think_board SET title='{$_POST['title']}', description='{$_POST['description']}', created=NOW() WHERE id={$_POST['id']}";
+        if(!empty($_FILES["userfile"]["name"])){
+            $upload_path = "./upload";
+            $uploadFile = iconv("UTF-8","EUC-KR",$_FILES["userfile"]["name"]);
+            $uploadPath = "{$upload_path}/{$uploadFile}";
+            
+            if(move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadPath)){
+                echo "파일이 성공적으로 업로드 되었습니다. \n";
+            }else{
+                echo "파일 업로드를 실패했습니다.";
+                exit();
+            }
+        }
+        $sql = "UPDATE think_board SET title='{$_POST['title']}', description='{$_POST['description']}', created=NOW(),file_real='{$uploadFile}' WHERE id={$_POST['id']}";
         $result = mysqli_query($conn, $sql);
 
         if($result == false){

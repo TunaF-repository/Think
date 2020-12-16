@@ -82,7 +82,22 @@
                     <legend>활동사진</legend>
                     <div>
                         <ul>
-                            <h1>준비중</h1>
+                            
+                            <?php
+                                $list = scandir("./upload");
+                                $i=0;
+                                while($i < count($list)){
+                                    if($list[$i] != '.'){
+                                        if($list[$i] != '..'){
+                                            if(preg_match("/.jpg\$/i",$list[$i]) || preg_match("/.png\$/i",$list[$i])){
+                                                $final_list = iconv("EUC-KR", "UTF-8", $list[$i]);
+                                                echo "<li><img src='./upload/{$final_list}' width='100' highet='100'></li>";
+                                            }
+                                        }
+                                    }
+                                    $i = $i+1;
+                                }
+                            ?>
                         </ul>
                     </div>
                 </fieldset>
