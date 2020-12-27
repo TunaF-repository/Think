@@ -11,28 +11,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="./css/board_read.css">
     <title>think</title>
 </head>
 <body>
     <header>
-        <div><!--Think!-->
-            <a href="./"><img src="#" width="#" height="#" alt="Think"></a>
-        </div>
-        <div> <!--상단 메뉴 페이지-->
+        <!--Think!-->
+        <a href="./index.php">Think</a>
+        
+        <div id="top_list"> <!--상단 메뉴 페이지-->
             <ul>
                 <li><a href="./">HOME</a></li>
                 <li><a href=""><?php
                     if(!empty($_SESSION['id'])){
-                        echo "<a href=\"./logout.php\">로그아웃</a>";
+                        echo "<a href=\"./logout.php\">logout</a>";
                     }else{
-                        echo "<a href=\"./login.php\">로그인</a>";
+                        echo "<a href=\"./login.php\">login</a>";
                     }
                 ?></a></li>
-                <li><a href="./join.php">회원가입</a></li>
+                <li><a href="./join.php">join</a></li>
             </ul>
         </div>
     </header>
     <article><!--게시글-->
+        
         <?php
             $sql = "SELECT * FROM think_board WHERE id={$_GET['idx']}";
 
@@ -44,26 +46,48 @@
             }
             
         ?>
+
+        <h1>Write Page</h1>
         <div>
-            <span>author:<?=$row['autor'];?></span><span>Date:<?=$row['created'];?></span><hr>
-            <div><span>Title:</span><?=$row['title'];?></div><hr>
-            <div><span>contents:</span><?=$row['description'];?></div><hr>
-            <? if(!empty($row["file_real"])){ $file_name=iconv("EUC-KR","UTF-8",$row["file_real"]);?>
-                <div><span>File:</span><span><a href="download.php?file=<?=$row["file_real"];?>"><?=$file_name;?></a></span></div><hr>
-            <?}?>
+           <hr>
+        </div>
+
+        <div id="board_read">
+            <span>author: <?=$row['autor'];?></span>
+            <span>Date: <?=$row['created'];?></span>
+            <div class="title">
+                <span id="title">제목</span>
+                <div>
+                    <?=$row['title'];?>
+                </div>
+            </div>
             
-            <?php
-                if($row['autor'] == $_SESSION['id']){
-                    echo "<button onclick=\"location.href='./board_modify.php?idx={$_GET['idx']}'\">수정</button>";
-                    echo "<button onclick=\"location.href='./action.php?mode=delete&idx={$_GET['idx']}'\">삭제</button>";
-                }
-            ?>
-            <button onclick="location.href='./board.php'">목록</button>
+            <div class="contents">
+                <div>내용</div>
+                <div id="textarea">
+                    <?=$row['description'];?>
+                </div>
+            </div>
+
+            <div class="sub_menu">
+                <? if(!empty($row["file_real"])){ $file_name=iconv("EUC-KR","UTF-8",$row["file_real"]);?>
+                    <div>
+                        <div id="File">File</div>
+                        <div id="File_contents"><a href="download.php?file=<?=$row["file_real"];?>"><?=$file_name;?></a></div>
+                    </div>
+                <?}?>
+
+                <div class="submit">
+                    <?php
+                        if($row['autor'] == $_SESSION['id']){
+                            echo "<button onclick=\"location.href='./board_modify.php?idx={$_GET['idx']}'\">수정</button>";
+                            echo "<button onclick=\"location.href='./action.php?mode=delete&idx={$_GET['idx']}'\">삭제</button>";
+                        }
+                    ?>
+                    <button onclick="location.href='./board.php'">목록</button>
+                </div>
+            </div>
         </div>
     </article>
-    <footer><!--비즈니스문의-->
-        <div>
-        </div>
-    </footer>
 </body>
 </html>
